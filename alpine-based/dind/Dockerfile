@@ -2,8 +2,8 @@ FROM docker:19.03.8-dind
 LABEL maintainer="Jaeho Lee <ljh@coever.co.kr>"
 
 ENV SSH_USERS ""
-ENV NO_PASSWD_USERS ""
 ENV SUDOERS ""
+ENV NO_PASSWD_USERS ""
 
 RUN set -eux; \
   apk --update --no-cache add \

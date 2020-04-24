@@ -19,6 +19,20 @@ function add_user
   fi
 }
 
+function create_auth_key
+{
+  local key_path=/etc/ssh/auth_keys/$1
+  local home_path=`eval echo ~$1`
+  if [ "${home_path}" != "~$1" ]
+  then
+    mkdir -p -m 600 ${key_path}
+    mkdir -p ${home_path}/.ssh
+    ssh-keygen -t rsa -f ${key_path}/id_rsa -q -P "" -C ""
+    cp -f ${key_path}/id_rsa.pub ${home_path}/.ssh/authorized_keys
+    chown -R ${1}:${1} ${home_path}/.ssh
+  fi
+}
+
 # Add users
 split "$SSH_USERS" "," users > /dev/null
 for user in "${users[@]}"
@@ -31,4 +45,11 @@ split "$SUDOERS" "," sudoers > /dev/null
 for sudoer in "${sudoers[@]}"
 do
   echo "${sudoer} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+done
+
+# Create SSH authorized keys
+split "$NO_PASSWD_USERS" "," no_pwd_users > /dev/null
+for user in "${no_pwd_users[@]}"
+do
+  create_auth_key $user || echo "" > /dev/null
 done
