@@ -4,7 +4,7 @@
 이 이미지는 다음과 같은 분들께 유용합니다.
 * Docker로 시스템을 배포하고 고객지원을 위해 SSH로 시스템에 접근하되, 고객의 PC에는 영향을 주지 않고 시스템과 관련된 부분에만 접근하고 싶은 경우.
 * 고객의 PC에 시스템을 배포해야할 때 필요한 기본 패키지들을 고객의 PC에 직접 설치하지 않고, 혹은 일일히 설치하지 않고 Dockerize하고 싶은 경우.
-* SSH 서버를 PC에 직접 설치하지 않은 경우.
+* SSH 서버를 PC에 직접 설치하고 싶지 않은 경우.
 # Reference
 * Alpine based: [Docker Official Image](https://hub.docker.com/_/docker)
 # How to use this image
@@ -13,11 +13,11 @@
 $ docker run --privileged --name docker-sshd -d \
   -e DOCKER_TLS_CERTDIR=/certs \
   -v path-to-docker-certs:/certs \
-  -v path-to-ssh-keys:/etc/ssh/auth_keys
-  -p 2222:22
-  -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3
-  -e AUTH_BY_KEY_USERS=root,test2,test3
-  -e SUDOERS=test
+  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -p 2222:22 \
+  -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3 \
+  -e AUTH_BY_KEY_USERS=root,test2,test3 \
+  -e SUDOERS=test \
   kakaruu/docker-sshd:dind
 ```
 ## Environment variable
