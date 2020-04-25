@@ -1,15 +1,15 @@
 #!/bin/bash
 
-function mfcb { local val="$4"; "$1"; eval "$2[$3]=\$val;"; };
-function val_ltrim { if [[ "$val" =~ ^[[:space:]]+ ]]; then val="${val:${#BASH_REMATCH[0]}}"; fi; };
-function val_rtrim { if [[ "$val" =~ [[:space:]]+$ ]]; then val="${val:0:${#val}-${#BASH_REMATCH[0]}}"; fi; };
-function val_trim { val_ltrim; val_rtrim; };
-function split { local -n array="$3" || return 1; readarray -c1 -C 'mfcb val_trim array' -td$2 <<<"$1$2"; unset 'array[-1]'; echo "Results are stored in '$3'."; };
+function uf_mfcb { local val="$4"; "$1"; eval "$2[$3]=\$val;"; };
+function uf_val_ltrim { if [[ "$val" =~ ^[[:space:]]+ ]]; then val="${val:${#BASH_REMATCH[0]}}"; fi; };
+function uf_val_rtrim { if [[ "$val" =~ [[:space:]]+$ ]]; then val="${val:0:${#val}-${#BASH_REMATCH[0]}}"; fi; };
+function uf_val_trim { uf_val_ltrim; uf_val_rtrim; };
+function uf_split { local -n array="$3" || return 1; readarray -c1 -C 'uf_mfcb uf_val_trim array' -td$2 <<<"$1$2"; unset 'array[-1]'; echo "Results are stored in '$3'."; };
 
-function add_user
+function uf_add_user
 {
   local user_detail
-  split "$1" ":" user_detail > /dev/null
+  uf_split "$1" ":" user_detail > /dev/null
   local user_name=${user_detail[0]}
   local user_pwd=${user_detail[1]}
   if [ ! -z "${user_name}" ]
@@ -24,7 +24,7 @@ function add_user
   fi
 }
 
-function create_auth_key
+function uf_create_auth_key
 {
   local key_path=/etc/ssh/auth_keys/$1
   local home_path=`eval echo ~$1`
@@ -39,22 +39,22 @@ function create_auth_key
 }
 
 # Add users
-split "$SSH_USERS" "," users > /dev/null
+uf_split "$SSH_USERS" "," users > /dev/null
 for user in "${users[@]}"
 do
-  add_user $user || echo "" > /dev/null
+  uf_add_user $user || echo "" > /dev/null
 done
 
 # Add sudo rules
-split "$SUDOERS" "," sudoers > /dev/null
+uf_split "$SUDOERS" "," sudoers > /dev/null
 for sudoer in "${sudoers[@]}"
 do
   echo "${sudoer} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 done
 
 # Create SSH authorized keys
-split "$NO_PASSWD_USERS" "," no_pwd_users > /dev/null
+uf_split "$NO_PASSWD_USERS" "," no_pwd_users > /dev/null
 for user in "${no_pwd_users[@]}"
 do
-  create_auth_key $user || echo "" > /dev/null
+  uf_create_auth_key $user || echo "" > /dev/null
 done
