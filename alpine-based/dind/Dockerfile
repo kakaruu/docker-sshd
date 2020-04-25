@@ -22,6 +22,10 @@ RUN ssh-keygen -A
 COPY alpine-based/dind/sshd-entrypoint.sh /usr/local/bin/
 COPY run_only_first_time.sh /usr/local/bin/
 
+RUN chmod 775 \
+  /usr/local/bin/sshd-entrypoint.sh \
+  /usr/local/bin/run_only_first_time.sh
+
 EXPOSE 22
 
 ENTRYPOINT ["sshd-entrypoint.sh"]
