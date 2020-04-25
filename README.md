@@ -9,15 +9,27 @@
 * Alpine based: [Docker Official Image](https://hub.docker.com/_/docker)
 # How to use this image
 ## Example of start an image
+### `SSH server & DooD`(Docker out of Docker)
 ```sh
-$ docker run --privileged --name docker-sshd -d \
+$ docker run --name dood-sshd -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -p  2221:22 \
+  -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
+  -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
+  -e SUDOERS=user_1 \
+  kakaruu/docker-sshd
+```
+### `SSH server & DinD`(Docker in Docker)
+```sh
+$ docker run --privileged --name dind-sshd -d \
   -e DOCKER_TLS_CERTDIR=/certs \
   -v path-to-docker-certs:/certs \
-  -v path-to-ssh-keys:/etc/ssh/auth_keys
-  -p 2222:22
-  -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3
-  -e AUTH_BY_KEY_USERS=root,test2,test3
-  -e SUDOERS=test
+  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -p 2222:22 \
+  -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
+  -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
+  -e SUDOERS=user_1 \
   kakaruu/docker-sshd:dind
 ```
 ## Environment variable
