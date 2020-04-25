@@ -1,23 +1,38 @@
+# Supported tags and respective `Dockerfile` links
+* [`1.0.0-alpine`, `1.0.0`, `alpine`, `latest`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/Dockerfile)
+* [`1.0.0-alpine-dind`, `1.0.0-dind`, `alpine-dind`, `dind`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/dind/Dockerfile)
 # docker-sshd
 이 이미지는 `Docker`와 `OpenSSH Server` 프로세스를 를 함께 실행하기 위한 이미지입니다. 공식 Docker 이미지를 토대로 만들었기 때문에 기본적으로 `Alpine`을 사용하게 됩니다. 개인적으로 Ubuntu가 익숙하여 `Ubuntu` 기반으로도 이미지를 작성할 예정입니다.
 
 이 이미지는 다음과 같은 분들께 유용합니다.
 * Docker로 시스템을 배포하고 고객지원을 위해 SSH로 시스템에 접근하되, 고객의 PC에는 영향을 주지 않고 시스템과 관련된 부분에만 접근하고 싶은 경우.
 * 고객의 PC에 시스템을 배포해야할 때 필요한 기본 패키지들을 고객의 PC에 직접 설치하지 않고, 혹은 일일히 설치하지 않고 Dockerize하고 싶은 경우.
-* SSH 서버를 PC에 직접 설치하지 않은 경우.
+* SSH 서버를 PC에 직접 설치하고 싶지 않은 경우.
 # Reference
 * Alpine based: [Docker Official Image](https://hub.docker.com/_/docker)
 # How to use this image
 ## Example of start an image
+### `SSH server & DooD`(Docker out of Docker)
 ```sh
-$ docker run --privileged --name docker-sshd -d \
+$ docker run --name dood-sshd -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -p  2221:22 \
+  -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
+  -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
+  -e SUDOERS=user_1 \
+  kakaruu/docker-sshd
+```
+### `SSH server & DinD`(Docker in Docker)
+```sh
+$ docker run --privileged --name dind-sshd -d \
   -e DOCKER_TLS_CERTDIR=/certs \
   -v path-to-docker-certs:/certs \
-  -v path-to-ssh-keys:/etc/ssh/auth_keys
-  -p 2222:22
-  -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3
-  -e AUTH_BY_KEY_USERS=root,test2,test3
-  -e SUDOERS=test
+  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -p 2222:22 \
+  -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
+  -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
+  -e SUDOERS=user_1 \
   kakaruu/docker-sshd:dind
 ```
 ## Environment variable
