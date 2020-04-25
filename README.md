@@ -18,7 +18,7 @@ $ docker run --privileged --name docker-sshd -d \
   -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3
   -e AUTH_BY_KEY_USERS=root,test2,test3
   -e SUDOERS=test
-  kakaruu/docker-sshd:1.0.0-alpine-dind
+  kakaruu/docker-sshd:dind
 ```
 ## Environment variable
 ### SSH_USERS
