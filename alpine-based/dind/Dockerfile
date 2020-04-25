@@ -14,7 +14,8 @@ RUN set -eux; \
     docker-compose \
     easy-rsa \
     bash \
-    sudo
+    sudo \
+    shadow
 
 RUN ssh-keygen -A
 

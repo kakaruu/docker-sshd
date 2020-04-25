@@ -14,8 +14,13 @@ function add_user
   local user_pwd=${user_detail[1]}
   if [ ! -z "${user_name}" ]
   then
-    adduser -D ${user_name}
-    [ ! -z "${user_pwd}" ] && echo "${user_name}:${user_pwd}" | chpasswd;
+    adduser -D ${user_name} || echo "" > /dev/null
+    if [ -z "${user_pwd}" ]
+    then
+      usermod -p '*' ${user_name}
+    else
+      echo "${user_name}:${user_pwd}" | chpasswd;
+    fi
   fi
 }
 
