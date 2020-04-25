@@ -16,8 +16,8 @@ $ docker run --privileged --name docker-sshd -d \
   -v path-to-ssh-keys:/etc/ssh/auth_keys \
   -p 2222:22 \
   -e SSH_USERS=root,user1:pwd1,user2,user3:pwd3 \
-  -e AUTH_BY_KEY_USERS=root,test2,test3 \
-  -e SUDOERS=test \
+  -e AUTH_BY_KEY_USERS=root,user2,user3 \
+  -e SUDOERS=user \
   kakaruu/docker-sshd:dind
 ```
 ## Environment variable
