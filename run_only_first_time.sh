@@ -53,7 +53,7 @@ do
 done
 
 # Create SSH authorized keys
-uf_split "$NO_PASSWD_USERS" "," no_pwd_users > /dev/null
+uf_split "$AUTH_BY_KEY_USERS" "," no_pwd_users > /dev/null
 for user in "${no_pwd_users[@]}"
 do
   uf_create_auth_key $user || echo "" > /dev/null

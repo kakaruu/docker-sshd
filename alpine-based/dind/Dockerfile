@@ -3,7 +3,7 @@ LABEL maintainer="Jaeho Lee <ljh@coever.co.kr>"
 
 ENV SSH_USERS ""
 ENV SUDOERS ""
-ENV NO_PASSWD_USERS ""
+ENV AUTH_BY_KEY_USERS ""
 
 RUN set -eux; \
   apk --update --no-cache add \
