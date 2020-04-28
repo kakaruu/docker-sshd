@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-LABEL maintainer="Jaeho Lee <ljh@coever.co.kr>"
+LABEL maintainer="Jaeho Lee <jhlee21071@gmail.com>"
 
 USER root
 
