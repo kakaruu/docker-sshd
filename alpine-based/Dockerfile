@@ -1,5 +1,5 @@
 FROM docker:19.03.8
-LABEL maintainer="Jaeho Lee <ljh@coever.co.kr>"
+LABEL maintainer="Jaeho Lee <jhlee21071@gmail.com>"
 
 ENV SSH_USERS ""
 ENV SUDOERS ""

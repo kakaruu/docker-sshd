@@ -6,4 +6,4 @@
 ) || echo "" > /dev/null
 rm -f /usr/local/bin/run_only_first_time.sh
 
-dockerd-entrypoint.sh & /usr/sbin/sshd -D
+dockerd-entrypoint.sh $@ & /usr/sbin/sshd -D
