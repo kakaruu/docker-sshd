@@ -1,0 +1,21 @@
+version: '3'
+services:
+  dind-sshd:
+    container_name: dind
+    image: kakaruu/docker-sshd:dind
+    restart: always
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+      SSH_USERS: root
+      AUTH_BY_KEY_USERS: root
+    volumes:
+      - /etc/dind/shared:/shared
+      - /etc/dind/docker/data:/var/lib/docker
+      - /etc/dind/sshd/auth_keys:/etc/ssh/auth_keys
+      - /etc/dind/docker/certs:/certs
+    ports:
+      - 3306:3306
+      - 1883:1883
+      - '2222:22'
+      - 2377:2376
