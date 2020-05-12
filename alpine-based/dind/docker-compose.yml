@@ -15,7 +15,5 @@ services:
       - /etc/dind/sshd/auth_keys:/etc/ssh/auth_keys
       - /etc/dind/docker/certs:/certs
     ports:
-      - 3306:3306
-      - 1883:1883
       - '2222:22'
       - 2377:2376
