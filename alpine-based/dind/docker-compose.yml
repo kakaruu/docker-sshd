@@ -10,10 +10,10 @@ services:
       SSH_USERS: root
       AUTH_BY_KEY_USERS: root
     volumes:
-      - /etc/dind/shared:/shared
-      - /etc/dind/docker/data:/var/lib/docker
-      - /etc/dind/sshd/auth_keys:/etc/ssh/auth_keys
-      - /etc/dind/docker/certs:/certs
+      - /var/lib/dind/shared:/shared
+      - /var/lib/dind/docker/data:/var/lib/docker
+      - /var/lib/dind/sshd/auth_keys:/etc/ssh/auth_keys
+      - /var/lib/dind/docker/certs:/certs
     ports:
       - '2222:22'
       - 2377:2376
