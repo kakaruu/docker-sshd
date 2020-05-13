@@ -26,7 +26,7 @@ function uf_add_user
 
 function uf_create_auth_key
 {
-  local key_path=/etc/ssh/auth_keys/$1
+  local key_path=/var/lib/ssh/auth_keys/$1
   local home_path=`eval echo ~$1`
   if [ "${home_path}" != "~$1" ]
   then

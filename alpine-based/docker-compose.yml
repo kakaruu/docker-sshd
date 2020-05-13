@@ -1,0 +1,15 @@
+version: '3'
+services:
+  dood-sshd:
+    container_name: dood
+    image: kakaruu/docker-sshd:latest
+    restart: always
+    environment:
+      SSH_USERS: root
+      AUTH_BY_KEY_USERS: root
+    volumes:
+      - /var/lib/dood/shared:/shared
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/dood/sshd/auth_keys:/var/lib/ssh/auth_keys
+    ports:
+      - '2221:22'
