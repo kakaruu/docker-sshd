@@ -3,6 +3,11 @@ LABEL maintainer="Jaeho Lee <jhlee21071@gmail.com>"
 
 USER root
 
+# Locale을 en_US.utf8로 변경
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
+
 # 기본 패키지 설치
 RUN apt-get update && apt-get -y install \
   nano \
@@ -10,13 +15,16 @@ RUN apt-get update && apt-get -y install \
   net-tools \
   git \
   openssh-server \
+  docker-compose \
+  easy-rsa \
   btrfs-progs \
   e2fsprogs \
   iptables \
   openssl \
   xfsprogs \
   pigz \
-  iputils-ping
+  iputils-ping \
+  sudo
 
 # docker 설치
 RUN apt-get -y install \
