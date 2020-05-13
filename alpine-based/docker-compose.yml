@@ -10,6 +10,6 @@ services:
     volumes:
       - /var/lib/dood/shared:/shared
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/dood/sshd/auth_keys:/etc/ssh/auth_keys
+      - /var/lib/dood/sshd/auth_keys:/var/lib/ssh/auth_keys
     ports:
       - '2221:22'

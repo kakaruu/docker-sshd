@@ -19,7 +19,7 @@
 ```sh
 $ docker run --name dood-sshd -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -v path-to-ssh-keys:/var/lib/ssh/auth_keys \
   -p  2221:22 \
   -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
   -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
@@ -31,7 +31,7 @@ $ docker run --name dood-sshd -d \
 $ docker run --privileged --name dind-sshd -d \
   -e DOCKER_TLS_CERTDIR=/certs \
   -v path-to-docker-certs:/certs \
-  -v path-to-ssh-keys:/etc/ssh/auth_keys \
+  -v path-to-ssh-keys:/var/lib/ssh/auth_keys \
   -p 2222:22 \
   -e SSH_USERS=root,user_1:pwd1,user_2,user_3:pwd3 \
   -e AUTH_BY_KEY_USERS=root,user_2,user_3 \
@@ -55,19 +55,19 @@ $ docker run --privileged --name dind-sshd -d \
   ```
 
 ### `AUTH_BY_KEY_USERS`
-`AUTH_BY_KEY_USERS`에는 SSH로 접근할 때 RSA키로 인증할 계정들을 입력합니다. 데이터는 `user_1[,user_2][,user_3]...[,user_n]`와 같은 형식으로 각각의 사용자 이름을 '`,`'로 구분합니다. 만약 존재하지 않는 사용자일 경우, 그 사용자명은 무시됩니다. 생성된 RSA키는 컨테이너 내부의 `/etc/ssh/auth_keys`에 `각 사용자 이름의 폴더` 속에 저장됩니다.
+`AUTH_BY_KEY_USERS`에는 SSH로 접근할 때 RSA키로 인증할 계정들을 입력합니다. 데이터는 `user_1[,user_2][,user_3]...[,user_n]`와 같은 형식으로 각각의 사용자 이름을 '`,`'로 구분합니다. 만약 존재하지 않는 사용자일 경우, 그 사용자명은 무시됩니다. 생성된 RSA키는 컨테이너 내부의 `/var/lib/ssh/auth_keys`에 `각 사용자 이름의 폴더` 속에 저장됩니다.
 * Format: `user_1[,user_2][,user_3]...[,user_n]`
 * Example: `user_1,user_2,user_3`
   ```bash
   # Result
-  $ ls /etc/ssh/auth_keys/*
-  /etc/ssh/auth_keys/user_1:
+  $ ls /var/lib/ssh/auth_keys/*
+  /var/lib/ssh/auth_keys/user_1:
   id_rsa      id_rsa.pub
 
-  /etc/ssh/auth_keys/user_2:
+  /var/lib/ssh/auth_keys/user_2:
   id_rsa      id_rsa.pub
 
-  /etc/ssh/auth_keys/user_3:
+  /var/lib/ssh/auth_keys/user_3:
   id_rsa      id_rsa.pub
   ```
 
@@ -86,7 +86,7 @@ $ docker run --privileged --name dind-sshd -d \
   ```
 
 ## Volumes
-### `/etc/ssh/auth_keys`
+### `/var/lib/ssh/auth_keys`
 사용자별 SSH키가 저장되는 곳 입니다. [`Environment variable`의 `AUTH_BY_KEY_USERS`](#auth_by_key_users)를 참고해주세요.
 ### 그 외
 [Docker Official Image](https://hub.docker.com/_/docker) 참고
