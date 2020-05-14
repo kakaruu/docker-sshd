@@ -11,6 +11,7 @@ RUN set -eux; \
     git \
     curl \
     openssh-server \
+    openssh-sftp-server \
     docker-compose \
     easy-rsa \
     bash \
