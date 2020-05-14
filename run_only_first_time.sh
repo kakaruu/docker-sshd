@@ -32,7 +32,7 @@ function uf_create_auth_key
   then
     mkdir -p -m 600 ${key_path}
     mkdir -p ${home_path}/.ssh
-    ssh-keygen -t rsa -f ${key_path}/id_rsa -q -P "" -C ""
+    ssh-keygen -t rsa -f ${key_path}/id_rsa -q -P "" -C "" -m PEM
     cp -f ${key_path}/id_rsa.pub ${home_path}/.ssh/authorized_keys
     chown -R ${1}:${1} ${home_path}/.ssh
   fi

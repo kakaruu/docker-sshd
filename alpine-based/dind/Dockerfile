@@ -11,13 +11,14 @@ RUN set -eux; \
     git \
     curl \
     openssh-server \
+    openssh-sftp-server \
     docker-compose \
     easy-rsa \
     bash \
     sudo \
     shadow
 
-RUN ssh-keygen -A
+RUN ssh-keygen -A -m PEM
 
 COPY alpine-based/dind/sshd-entrypoint.sh /usr/local/bin/
 COPY run_only_first_time.sh /usr/local/bin/
