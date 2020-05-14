@@ -1,6 +1,6 @@
 # Supported tags and respective `Dockerfile` links
-* [`19.03.8.1-alpine`, `19.03.8.1`, `alpine`, `latest`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/Dockerfile)
-* [`19.03.8.1-alpine-dind`, `19.03.8.1-dind`, `alpine-dind`, `dind`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/dind/Dockerfile)
+* [`19.03.8.2-alpine`, `19.03.8.2`, `alpine`, `latest`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/Dockerfile)
+* [`19.03.8.2-alpine-dind`, `19.03.8.2-dind`, `alpine-dind`, `dind`](https://github.com/kakaruu/docker-sshd/blob/master/alpine-based/dind/Dockerfile)
 
 # docker-sshd
 이 이미지는 `Docker`와 `OpenSSH Server` 프로세스를 를 함께 실행하기 위한 이미지입니다. 공식 Docker 이미지를 토대로 만들었기 때문에 기본적으로 `Alpine`을 사용하게 됩니다. 개인적으로 Ubuntu가 익숙하여 `Ubuntu` 기반으로도 이미지를 작성할 예정입니다.
