@@ -1,4 +1,4 @@
-FROM docker:19.03.10
+FROM docker:19.03.11
 LABEL maintainer="Jaeho Lee <jhlee21071@gmail.com>"
 
 ENV SSH_USERS ""
